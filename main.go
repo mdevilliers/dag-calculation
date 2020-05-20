@@ -35,7 +35,7 @@ func main() {
 
 	funcs.RegisterIteratorFn("distance_over_ground", func(rows []*dataRow) error {
 		fmt.Println("calculating distance over ground")
-		// iterate the rows and od the maths
+		// iterate the rows and do the maths
 		for _, r := range rows {
 			r.DistanceOverGround = null.FloatFrom(22)
 		}
