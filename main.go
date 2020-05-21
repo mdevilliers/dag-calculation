@@ -3,7 +3,6 @@ package main
 import (
 	"gopkg.in/guregu/null.v4"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/mdevilliers/dag-calculation/calculations"
 )
 
@@ -16,24 +15,22 @@ func main() {
 		{Location: calculations.Location{Longitude: null.FloatFrom(12.37), Latitude: null.FloatFrom(12.37)}},
 	}
 
-	ds := calculations.NewResolver()
-
-	// we have already resolved these
-	// TODO : make this go away
-	ds.RegisterResolved(calculations.LocationLongitudeDependancy)
-	ds.RegisterResolved(calculations.LocationLatitudeDependancy)
-	ds.RegisterResolved(calculations.VesselUUIDDependancy)
-	ds.RegisterResolved(calculations.AccountUUIDDependancy)
-	ds.RegisterResolved(calculations.EventTimeDependancy)
-	ds.RegisterResolved(calculations.WeatherSwellHeightDependancy)
-
 	funcs := calculations.NewFunctionSet()
 
 	calculations.RegisterDistanceOverGround(funcs)
-	calculations.RegisterSpeedOverGround(funcs)
 	calculations.RegisterDouglasSeaState(funcs)
+	calculations.RegisterSpeedOverGround(funcs)
 
-	err := ds.CollapseAll(rows, funcs)
-	spew.Dump(rows, err)
+	err := funcs.Build()
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = funcs.Collapse(rows)
+
+	if err != nil {
+		panic(err)
+	}
 
 }

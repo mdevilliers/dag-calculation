@@ -11,6 +11,6 @@ func RegisterSpeedOverGround(f *functionset) error {
 type sogCalculator struct{}
 
 func (s *sogCalculator) Fn(runtime runtime, rows []*DataRow) error {
-	runtime.Logger.Infof("Speed over ground called") // TODO : how do you log?
+	runtime.Logger.Infof("Speed over ground called")
 	return nil
 }
