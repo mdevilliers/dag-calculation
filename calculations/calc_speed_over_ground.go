@@ -1,9 +1,5 @@
 package calculations
 
-import (
-	"fmt"
-)
-
 const (
 	SpeedOverGroundDependancy = "speed_over_ground"
 )
@@ -14,7 +10,7 @@ func RegisterSpeedOverGround(f *functionset) error {
 
 type sogCalculator struct{}
 
-func (s *sogCalculator) Fn(rows []*DataRow) error {
-	fmt.Println("Speed over ground called") // TODO : how do you log?
+func (s *sogCalculator) Fn(runtime runtime, rows []*DataRow) error {
+	runtime.Logger.Infof("Speed over ground called") // TODO : how do you log?
 	return nil
 }

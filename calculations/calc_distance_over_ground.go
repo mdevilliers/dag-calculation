@@ -1,8 +1,6 @@
 package calculations
 
 import (
-	"fmt"
-
 	"gopkg.in/guregu/null.v4"
 
 	"github.com/umahmood/haversine"
@@ -16,8 +14,8 @@ func RegisterDistanceOverGround(f *functionset) error {
 	return f.RegisterIteratorFn(DistanceOverGroundDependancy, DistanceOverGroundFn, LocationLongitudeDependancy, LocationLatitudeDependancy)
 }
 
-func DistanceOverGroundFn(rows []*DataRow) error {
-	fmt.Println("Distance over ground called") // TODO : how do you log?
+func DistanceOverGroundFn(runtime runtime, rows []*DataRow) error {
+	runtime.Logger.Infof("Distance over ground called")
 
 	var previous *haversine.Coord
 

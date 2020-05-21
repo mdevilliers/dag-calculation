@@ -1,6 +1,7 @@
 package calculations
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"time"
@@ -75,12 +76,19 @@ func (r *resolver) Collapse(data []*DataRow, f *functionset) error {
 	todo := f.CanInvoke(r.resolved)
 
 	if len(todo) == 0 && f.Len() != 0 {
-		return errors.New("deadlock")
+		return errors.New("booyah deadlock!")
 	}
 
 	// invoke one at a time
 	for _, t := range todo {
-		err := t.Fn(data)
+
+		// TODO : pass in rather than hard code
+		runtime := runtime{
+			Ctx:    context.Background(),
+			Logger: newNoopLogger(),
+		}
+
+		err := t.Fn(runtime, data)
 
 		if err != nil {
 			return err
@@ -106,9 +114,9 @@ type functionset struct {
 	registered map[string]registeredFunc
 }
 
-type doIteratorFn func(rows []*DataRow) error
+type doIteratorFn func(r runtime, rows []*DataRow) error
 type doIterator interface {
-	Fn(rows []*DataRow) error
+	Fn(r runtime, rows []*DataRow) error
 }
 
 func (f *functionset) RegisterIteratorFn(satisfies string, fn doIteratorFn, requires ...string) error {

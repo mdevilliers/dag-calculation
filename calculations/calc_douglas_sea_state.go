@@ -1,8 +1,6 @@
 package calculations
 
 import (
-	"fmt"
-
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -16,8 +14,8 @@ func RegisterDouglasSeaState(f *functionset) error {
 
 type dss struct{}
 
-func (d *dss) Fn(rows []*DataRow) error {
-	fmt.Println("Douglas Sea State called") // TODO : how do you log?
+func (d *dss) Fn(runtime runtime, rows []*DataRow) error {
+	runtime.Logger.Infof("Douglas Sea State called")
 
 	for _, r := range rows {
 		if r.Weather.SwellHeight.Valid {
