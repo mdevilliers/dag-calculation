@@ -9,7 +9,7 @@ const (
 )
 
 func RegisterDouglasSeaState(f *functionset) error {
-	return f.RegisterIterator(DouglasSeaStateDependancy, &dss{}, WeatherSwellHeightDependancy)
+	return f.RegisterIterator(DouglasSeaStateDependancy, &dss{})
 }
 
 type dss struct{}

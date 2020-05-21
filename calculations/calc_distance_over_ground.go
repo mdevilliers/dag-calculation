@@ -11,12 +11,11 @@ const (
 )
 
 func RegisterDistanceOverGround(f *functionset) error {
-	return f.RegisterIteratorFn(DistanceOverGroundDependancy, DistanceOverGroundFn, LocationLongitudeDependancy, LocationLatitudeDependancy)
+	return f.RegisterIteratorFn(DistanceOverGroundDependancy, DistanceOverGroundFn)
 }
 
 func DistanceOverGroundFn(runtime runtime, rows []*DataRow) error {
 	runtime.Logger.Infof("Distance over ground called")
-
 	var previous *haversine.Coord
 
 	for _, r := range rows {

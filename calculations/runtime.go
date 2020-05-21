@@ -1,6 +1,8 @@
 package calculations
 
-import "context"
+import (
+	"context"
+)
 
 type Logger interface {
 	Infof(message string, args ...interface{})
